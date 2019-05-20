@@ -41,21 +41,29 @@ function concerts() {
    "https://rest.bandsintown.com/artists/" + info + "/events?app_id=codingbootcamp";
 
  axios.get(concertApi).then(function(response) {
-   var obj = response.data;
-   if(!error){
-   for (i = 0; i < 5; i++) {
-     //console.log(response[i])
-     console.log("******************************************");
-     console.log("Venue: " + obj[i].venue.name);
-     console.log("Country: " + obj[i].venue.country);
-     console.log("City: " + obj[i].venue.city);
-     console.log("Date " + moment(obj[i].datetime).format("l"));
-   }
- } else {
-   console.log ("Concert not found!")
- }
- });
-}
+   const data= response.data[0];
+   const concertData=[
+     
+    //"*******************************************",
+     
+     "Artist: " + info,
+     "Venue: " + data.venue.name + ", " + data.venue.region,
+     "Location: " + data.venue.city + ", " + data.venue.region,
+     "Date: " + moment(data.datetime).format("l"),
+     
+
+
+   ]
+   console.log(concertData);
+  })
+  .catch(function(error){
+    console.log(error);
+  });
+
+ 
+
+   
+
 
 function songs(){
  const spotify = new Spotify({
@@ -86,7 +94,8 @@ function songs(){
 
      }
 
-function movies() {
+
+     function movies() {
  const movieApi =
    "http://www.omdbapi.com/?t=" + info + "&y=&plot=short&apikey=trilogy";
 
@@ -103,5 +112,14 @@ function movies() {
    console.log("Plot: " + film.Plot);
    console.log("Actors: " + film.Actors);
  });
+ 
+ 
+ function whatever(){
+  fs.readFile('random.txt', "UTF8", function(error, data){
+    var txt = data.split(',');
+ 
+    spotifyThisSong(txt[1]);
+  });
 }
-
+}
+}
